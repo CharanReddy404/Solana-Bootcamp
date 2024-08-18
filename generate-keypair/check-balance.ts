@@ -1,12 +1,16 @@
 // Step 3: Challenge
 import { Connection, LAMPORTS_PER_SOL, PublicKey } from "@solana/web3.js";
 
-const publicKey = new PublicKey("JCZjJcmuWidrj5DwuJBxwqHx7zRfiBAp6nCLq3zYmBxd");
+const suppliedToPubkey = process.argv[2] || null;
 
-const connection = new Connection(
-  "https://api.mainnet-beta.solana.com",
-  "confirmed"
-);
+if (!suppliedToPubkey) {
+  console.log(`Please provide a public key to send to`);
+  process.exit(1);
+}
+
+const publicKey = new PublicKey(suppliedToPubkey);
+
+const connection = new Connection("https://api.devnet.solana.com", "confirmed");
 
 const balanceInLamports = await connection.getBalance(publicKey);
 
